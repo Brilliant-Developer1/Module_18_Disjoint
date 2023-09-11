@@ -61,27 +61,47 @@
 using namespace std;
 int parent[1000];
 
-void set(int n)
+void ds_set(int n)
 {
     for (int i = 1; i <= n; i++)
     {
-        /* code */
+        parent[i] = -1;
     }
 }
 
-int find(int n)
+int find(int node)
 {
 
-    while (parent[n] != -1)
+    while (parent[node] != -1)
     {
-        n = parent[n];
+        node = parent[node];
     }
-    return n;
+    return node;
+}
+
+void ds_union(int a, int b)
+{
+    int leaderA = find(a);
+    int leaderB = find(b);
+
+    if (leaderA != leaderB)
+    {
+        parent[b] = a;
+    }
 }
 
 int main()
 {
+    int n, e;
+    cin >> n >> e;
+    while (e--)
+    {
+        int a, b;
+        cin >> a >> b;
+        ds_union(a, b);
+    }
 
-    cout << find(7);
+    ds_set(7);
+
     return 0;
 }
