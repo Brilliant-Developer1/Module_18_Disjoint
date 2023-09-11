@@ -60,12 +60,14 @@
 
 using namespace std;
 int parent[1000];
+int parentSize[1000];
 
 void dsu_set(int n)
 {
     for (int i = 1; i <= n; i++)
     {
         parent[i] = -1;
+        parentSize[i] = 0;
     }
 }
 
@@ -86,8 +88,7 @@ void dsu_union(int a, int b)
 
     if (leaderA != leaderB)
     {
-        parent[leaderB] = leaderA;
-        }
+    }
 }
 
 int main()
