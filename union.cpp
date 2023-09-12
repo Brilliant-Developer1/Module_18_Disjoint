@@ -60,12 +60,13 @@
 
 using namespace std;
 int parent[1000];
-
+int parentLevel[1000];
 void dsu_set(int n)
 {
     for (int i = 1; i <= n; i++)
     {
         parent[i] = -1;
+        parentLevel[i] = 0;
     }
 }
 
@@ -87,13 +88,14 @@ void dsu_union(int a, int b)
     if (leaderA != leaderB)
     {
         parent[leaderB] = leaderA;
-        }
+    }
 }
 
 int main()
 {
     int n, e;
     cin >> n >> e;
+    dsu_set(n);
     while (e--)
     {
         int a, b;
@@ -101,7 +103,7 @@ int main()
         dsu_union(a, b);
     }
 
-    dsu_set(7);
+    cout << dsu_find(5);
 
     return 0;
 }
