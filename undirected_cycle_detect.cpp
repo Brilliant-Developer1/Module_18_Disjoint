@@ -59,16 +59,15 @@
 #include <vector>
 
 using namespace std;
-const int N = 1e5 + 5;
-int parent[N];
-int parentSize[N];
+int parent[1000];
+int parentLevel[1000];
 
 void dsu_set(int n)
 {
     for (int i = 1; i <= n; i++)
     {
         parent[i] = -1;
-        parentSize[i] = 1;
+        parentLevel[i] = 0;
     }
 }
 
@@ -89,16 +88,18 @@ void dsu_union(int a, int b)
 
     if (leaderA != leaderB)
     {
-        if (parentSize[leaderA] > parentSize[leaderB])
+        if (parentLevel[leaderA] > parentLevel[leaderB])
         {
-            // A leader
             parent[leaderB] = leaderA;
-            parentSize[leaderA] += parentSize[leaderB];
+        }
+        else if (parentLevel[leaderB] > parentLevel[leaderA])
+        {
+            parent[leaderA] = leaderB;
         }
         else
         {
-            parent[leaderA] = leaderB;
-            parentSize[leaderB] += parentSize[leaderA];
+            parent[leaderB] = leaderA;
+            parentLevel[leaderA]++;
         }
     }
 }
@@ -112,10 +113,20 @@ int main()
     {
         int a, b;
         cin >> a >> b;
-        dsu_union(a, b);
+
+        int leaderA = dsu_find(a);
+        int leaderB = dsu_find(b);
+        if (leaderA == leaderB)
+        {
+            cout << "Cycel detedted " << a << " " << b << endl;
+        }
+        else
+        {
+            dsu_union(a, b);
+        }
     }
 
-    cout << dsu_find(5);
+    // cout << dsu_find(5);
 
     return 0;
 }
